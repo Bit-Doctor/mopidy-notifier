@@ -20,6 +20,12 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
+
+        schema['on_start'] = config.Boolean()
+        schema['on_start_message'] = config.String()
+        schema['on_stop'] = config.Boolean()
+        schema['on_stop_message'] = config.String()
+
         return schema
 
     def setup(self, registry):

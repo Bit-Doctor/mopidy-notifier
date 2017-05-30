@@ -10,7 +10,7 @@ from mopidy.core import CoreListener
 class NotifierFrontend(pykka.ThreadingActor, CoreListener):
     def __init__(self, config, core):
         super(NotifierFrontend, self).__init__()
-        self.config = config
+        self.config = config['notifier']
         self.core = core
 
     def notify(self, message, subtitle):
@@ -24,10 +24,12 @@ class NotifierFrontend(pykka.ThreadingActor, CoreListener):
         subprocess.call(call)
 
     def on_start(self):
-        self.notify('Starting...','')
+        if self.config['on_start']:
+            self.notify(self.config['on_start_message'], '')
 
     def on_stop(self):
-        self.notify('Shutting down...','')
+        if self.config['on_stop']:
+            self.notify(self.config['on_stop_message'], '')
 
     def track_playback_started(self, tl_track):
         track = tl_track.track
