@@ -29,6 +29,10 @@ class Extension(ext.Extension):
         schema['message_format'] = config.String(optional=True)
         schema['subtitle_format'] = config.String(optional=True)
 
+        schema['album_art'] = config.Boolean()
+        schema['album_art_size'] = config.Integer(minimum=8, maximum=512)
+        schema['default_album_art'] = config.String(optional=True)
+
         return schema
 
     def setup(self, registry):
