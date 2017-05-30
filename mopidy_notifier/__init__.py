@@ -26,6 +26,9 @@ class Extension(ext.Extension):
         schema['on_stop'] = config.Boolean()
         schema['on_stop_message'] = config.String()
 
+        schema['message_format'] = config.String(optional=True)
+        schema['subtitle_format'] = config.String(optional=True)
+
         return schema
 
     def setup(self, registry):

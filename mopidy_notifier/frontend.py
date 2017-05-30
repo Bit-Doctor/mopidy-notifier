@@ -31,18 +31,29 @@ class NotifierFrontend(pykka.ThreadingActor, CoreListener):
         if self.config['on_stop']:
             self.notify(self.config['on_stop_message'], '')
 
-    def track_playback_started(self, tl_track):
+    def notification_format(self, tl_track):
         track = tl_track.track
         song = track.name
         artists = ', '.join([a.name for a in track.artists])
         album = track.album.name
+
+        subtitle_format = self.config['subtitle_format']
+        message_format = self.config['message_format']
+
         if sys.platform.startswith('darwin'):
-            subtitle = artists + ' - ' + album
-            message = song
+            subtitle_format = subtitle_format or '{artists} - {album}'
+            message_format = message_format or '{song}'
         elif sys.platform.startswith('linux'):
-            subtitle = ''
-            message = song + '\\n' + artists + ' - ' + album
+            subtitle_format = ''
+            message_format = message_format or '{song}\\n{artists} - {album}'
         else:
             # Unsupported system
             raise EnvironmentError((1, "This operating system is not supported."))
+
+        message = message_format.format(song=song, artists=artists, album=album)
+        subtitle = subtitle_format.format(song=song, artists=artists, album=album)
+        return (message, subtitle)
+
+    def track_playback_started(self, tl_track):
+        message, subtitle = self.notification_format(tl_track)
         self.notify(message, subtitle)
