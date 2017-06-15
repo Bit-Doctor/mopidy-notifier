@@ -41,11 +41,24 @@ Then install ``mopidy-notifier`` from PyPI::
 Configuration
 =============
 
-No configuration is needed. The extension is enabled by default when it is
-installed. To disable it, add the following to your Mopidy config file::
+The extension is enabled by default when it is installed.
+To disable it, add the following to your Mopidy config file::
 
     [notifier]
     enabled = false
+
+The following configuration values are available:
+
+- ``notifier/enabled``: If the extension should be eneabled or not. Defaults to ``true``.
+- ``notifier/on_start``: Whether a notification should be displayed on mopidy start. Defaults to ``true``.
+- ``notifier/on_start_message``: The notification's message displayed on mopidy start. Defaults to ``Starting...``.
+- ``notifier/on_stop``: Whether a notification should be displayed on mopidy close. Defaults to ``true``.
+- ``notifier/on_stop_message``: The notification's message displayed on mopidy start. Defaults to ``Shutting down...``.
+- ``notifier/message_format``: Format of the notification main message. Defaults to ``{artists} - {album}`` on OSX and ``{song}\\n{artists} - {album}`` on Linux.
+- ``notifier/subtitle_format``: Format of the notification's subtitle. Only available on OSX. Defaults to ``{song}``.
+- ``notifier/album_art``: Whether or not the album art for the current song should be fetched and sent with the notification. Defaults to ``false``.
+- ``notifier/album_art_size``: Size of the album art icon sent to the notification. Defaults to ``64``.
+- ``notifier/default_album_art``: Path to the default image when no album art could be fetched.
 
 
 Project resources
