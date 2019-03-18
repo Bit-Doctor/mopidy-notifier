@@ -26,6 +26,7 @@ setup(
         'setuptools',
         'Mopidy >= 0.18',
         'Pykka >= 1.1',
+        'Pillow >= 4.1.0',
     ],
     entry_points={
         'mopidy.ext': [
